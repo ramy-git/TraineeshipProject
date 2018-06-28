@@ -1,3 +1,5 @@
+
+
 int checkSensor(){
   bool first;
   bool second;
@@ -12,6 +14,7 @@ int checkSensor(){
      return directio;
      timeus2=millis();
      return time_e;
+     EVENT=1;
     }
         
     }
@@ -25,6 +28,7 @@ int checkSensor(){
         return directio;
         time_e=millis();
         return time_e;
+        EVENT=1;
     
     }
 
@@ -45,3 +49,4 @@ int checkSensor(){
                                           }
                                           
       } 
+
