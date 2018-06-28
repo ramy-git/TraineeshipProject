@@ -16,7 +16,7 @@
 #define PING_INTERVAL 33 // Milliseconds between sensor pings (29ms is about the min to avoid cross-sensor echo).
 
 unsigned long pingTimer[SONAR_NUM]; // Holds the times when the next ping should happen for each sensor.
-unsigned long 
+bool EVENT=0;
 
 unsigned int cm[SONAR_NUM];         // Where the ping distances are stored.
 uint8_t currentSensor = 0;          // Keeps track of which sensor is active.
@@ -61,12 +61,7 @@ void oneSensorCycle() { // Sensor ping cycle complete, do something with the res
   // The following code would be replaced with your code that does something with the ping results.
     
 
-    Serial.print(*p);
-    Serial.print("cm ");
-    Serial.print(*c);
-    Serial.print("cm ");
-
-  if(40< *p <100) { 
+ if(EVENT) {checkOppo(); EVENT=0};
   
-  Serial.println();
+  // 
 }
