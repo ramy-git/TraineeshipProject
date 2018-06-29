@@ -15,9 +15,14 @@
 #define MAX_DISTANCE 150 // Maximum distance (in cm) to ping.
 #define PING_INTERVAL 33 // Milliseconds between sensor pings (29ms is about the min to avoid cross-sensor echo).
 
+#define SD_INTERVAL XXX // Milliseconds between result registration to the sd card.
+#define MIN_DISTANCE XXX // Minimum distance to identify that a person is in front of the sensor.
+#define MAX_DELAY XXX // Maximum ammount of time to wait for a person to pass in front of the opposite sensor.
+
 unsigned long pingTimer[SONAR_NUM]; // Holds the times when the next ping should happen for each sensor.
-unsigned people_in=0;
-unsigned int people_out=0;
+unsigned int people_in = 0;
+unsigned int people_out = 0;
+/*
 bool EVENT=0;
 bool EVENT_first=0;
 bool EVENT_second=0;
@@ -32,9 +37,10 @@ const unsigned long TIME_MAX = 2000;
 
 unsigned int *us1=&cm[0]; // ultrasensor 1
 unsigned int *us2=&cm[1]; // ultrasensor 2
+*/
 
-
-int checkSensor(){
+/*
+int check_sensor(){
   bool first;
   bool second;
   bool directio;
@@ -67,13 +73,24 @@ int checkSensor(){
         EVENT=1;
     
     }
-
-
+}
+*/
    
-int checkOppo() {
+int check_opposite(unsigned int id, unsigned int dir) {
+  XXX time_e = millis();
+  while (millis() - time_e < MAX_DELAY) {
+    if (sonar[id].ping_cm() < MIN_DIST) {
+      if (dir == 0) {
+        // ++ people_in/out
+      } else {
+        // ++ people_in/out
+      }
+      break;
+    }
+  }
      
       
-      
+      /*
        if(EVENT_second) {
          
       while( millis()-time_e < TIME_MAX ) { 
@@ -94,8 +111,8 @@ int checkOppo() {
                                           }
                                           
       } 
-                                          
-
+        */                                  
+}
 
 NewPing sonar[SONAR_NUM] = {     // Sensor object array.
   NewPing(7, 8, MAX_DISTANCE), // Each sensor's trigger pin, echo pin, and max distance to ping.
@@ -104,12 +121,25 @@ NewPing sonar[SONAR_NUM] = {     // Sensor object array.
 
 void setup() {
   Serial.begin(115200);
-  pingTimer[0] = millis() + 75;           // First ping starts at 75ms, gives time for the Arduino to chill before starting.
-  for (uint8_t i = 1; i < SONAR_NUM; i++) // Set the starting time for each sensor.
-    pingTimer[i] = pingTimer[i - 1] + PING_INTERVAL;
 }
 
 void loop() {
+  if (millis() > PING_INTERVAL) { // check for people
+    if (sonar[first].ping_cm() < MIN_DISTANCE) {
+      check_opposite(second, 1);
+    } else if (sonar[second].ping_cm() < MIN_DISTANCE) {
+      check_opposite(first, 0);
+    }
+  }
+  
+  if (millis() > SD_INTERVAL) { // register the current observations
+    // {time, in, out, temp, hum, snd}
+    // people_in = 0;
+    // people_out = 0;
+  }
+  
+
+  /*
   for (uint8_t i = 0; i < SONAR_NUM; i++) { // Loop through all the sensors.
     if (millis() >= pingTimer[i]) {         // Is it this sensor's time to ping?
       pingTimer[i] += PING_INTERVAL * SONAR_NUM;  // Set next time this sensor will be pinged.
@@ -121,8 +151,10 @@ void loop() {
     }
   }
   // Other code that *DOESN'T* analyze ping results can go here.
+  */
 }
 
+/*
 void echoCheck() { // If ping received, set the sensor distance to array.
   if (sonar[currentSensor].check_timer())
     cm[currentSensor] = sonar[currentSensor].ping_result / US_ROUNDTRIP_CM;
@@ -138,6 +170,6 @@ checksensor();
  EVENT_first=0;
  EVENT_second;
  };
-  
+*/
   
 }
