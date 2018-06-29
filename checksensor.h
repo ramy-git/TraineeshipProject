@@ -12,9 +12,9 @@ int checkSensor(){
      second=0;
      return second;
      return directio;
-     timeus2=millis();
+     time_e=millis();
      return time_e;
-     EVENT=1;
+     EVENT_first=1;
     }
         
     }
@@ -28,22 +28,29 @@ int checkSensor(){
         return directio;
         time_e=millis();
         return time_e;
-        EVENT=1;
+        EVENT_second=1;
     
     }
 
 
-    int checkOppo() {
+   
+int checkOppo() {
      
-      while( millis()-time_e < TIME_MAX ) {
-      checksensor();
-      if( direction  && first && !second)
+      
+      
+       if(EVENT_us2) {
+         
+      while( millis()-time_e < TIME_MAX ) { 
+         checksensor();
+      if( EVENT_first)
       {people_in++;
       returne people_in;
         }
-
-         if( !direction  && !first && second)
-      {people_out--;
+      }
+         while( millis()-time_e < TIME_MAX ) {
+           checksensor();
+         if( EVENT_second)
+      {people_out++;
       return people_out;
         }
                                           }
