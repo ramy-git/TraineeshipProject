@@ -16,7 +16,14 @@
 #define PING_INTERVAL 33 // Milliseconds between sensor pings (29ms is about the min to avoid cross-sensor echo).
 
 unsigned long pingTimer[SONAR_NUM]; // Holds the times when the next ping should happen for each sensor.
+unsigned people_in=0;
+unsigned int people_out=0;
 bool EVENT=0;
+bool EVENT_first=0;
+bool EVENT_second=0;
+
+unsigned int people_in=0;
+unsigned int people_out=0;
 
 unsigned int cm[SONAR_NUM];         // Where the ping distances are stored.
 uint8_t currentSensor = 0;          // Keeps track of which sensor is active.
@@ -25,6 +32,70 @@ const unsigned long TIME_MAX = 2000;
 
 unsigned int *us1=&cm[0]; // ultrasensor 1
 unsigned int *us2=&cm[1]; // ultrasensor 2
+
+
+int checkSensor(){
+  bool first;
+  bool second;
+  bool directio;
+  unsigned long time_e;
+    if ( 8< *us1< 80) {
+     directio = 1;
+     first=1;
+     return first;
+     second=0;
+     return second;
+     return directio;
+     time_e=millis();
+     return time_e;
+     EVENT_first=1;
+     EVENT=1;
+    }
+        
+    }
+    if ( 8< *us2< 80) {
+     
+        direction = 0;
+        first=0;
+        return first;
+        second=1;
+        return second;
+        return directio;
+        time_e=millis();
+        return time_e;
+        EVENT_second=1;
+        EVENT=1;
+    
+    }
+
+
+   
+int checkOppo() {
+     
+      
+      
+       if(EVENT_second) {
+         
+      while( millis()-time_e < TIME_MAX ) { 
+         checksensor();
+      if( EVENT_first)
+      {people_in++;
+      returne people_in;
+        }
+      }
+
+      if( EVENT_first) {
+         while( millis()-time_e < TIME_MAX ) {
+           checksensor();
+         if( EVENT_second)
+      {people_out++;
+      return people_out;
+        }
+                                          }
+                                          
+      } 
+                                          
+
 
 NewPing sonar[SONAR_NUM] = {     // Sensor object array.
   NewPing(7, 8, MAX_DISTANCE), // Each sensor's trigger pin, echo pin, and max distance to ping.
@@ -60,8 +131,13 @@ void echoCheck() { // If ping received, set the sensor distance to array.
 void oneSensorCycle() { // Sensor ping cycle complete, do something with the results.
   // The following code would be replaced with your code that does something with the ping results.
     
-
- if(EVENT) {checkOppo(); EVENT=0};
+checksensor();
+ if(EVENT) {
+  checkOppo(); 
+ EVENT=0;
+ EVENT_first=0;
+ EVENT_second;
+ };
   
-  // 
+  
 }
