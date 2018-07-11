@@ -1,0 +1,48 @@
+#include <SPI.h>
+
+#include <SD.h>
+
+
+
+const int CSpin = 10;
+String dataString =""; // Variable to hold data to be written to microSD card.
+
+File sensorData;
+
+void setup()
+{
+  // Open Serial Communication Port:
+ 
+  Serial.print("Initialized SD Card.");
+  pinMode(CSpin, OUTPUT);
+const int CSpin = 10;
+String dataString ="";
+
+  if (!SD.begin(CSpin)) { // If card present and initialized, then proceed:
+   Serial.println("Card failed, or not present");
+   return; // stop process.
+  }
+  Serial.println("Card Initialized.");
+}
+
+void loop()
+{
+  // Form  data string
+  dataString = String(*people_in) + "," + String(*people_out) + "," + String(*temp)+ "," + String(*time_e) + ";" + String(*hum) + ";" + String(*snd); // convert to CS
+  saveData();    // Write to SD card.
+  delay(50); // delay before next write to SD Card, adjust as required
+}
+
+void saveData(){
+ if(SD.exists("data.csv")){ // Check if file available.
+ // Append new data file
+ sensorData = SD.open("data.csv", FILE_WRITE);
+ if (sensorData){
+  sensorData.println(dataString);
+  sensorData.close(); // close the file
+ }
+ }else
+ {
+  Serial.println("Error writing to file !");
+ }
+}
